@@ -13,9 +13,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.9"
 etherparse = { version = "0.18" }
 # tokio-tun = {version = "0.13.2"}
-# net-route = { version = "0.4.6" }
-libc = {version = "0.2.164"}
-rtnetlink = { version = "0.16.0"}
+# rtnetlink = { version = "0.16.0"}
 
 
 [[example]]

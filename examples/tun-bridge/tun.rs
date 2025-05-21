@@ -1,8 +1,5 @@
 use {
-    etherparse::{Ipv4Slice, Ipv6Slice, UdpHeader},
-    tokio::{
-        net::UdpSocket,
-    },
+    etherparse::{Ipv4Slice, Ipv6Slice, UdpHeader}, 
 };
 
 #[tokio::main]
@@ -11,13 +8,18 @@ async fn main() {
 }
 
 async fn tun_listen() {
-    println!("Listen on 10.200.9.1");
+    println!("Listen on 10.200.0.0");
     let mut config = tun::Configuration::default();
     config
-        .address((10, 200, 9, 1))
+        .address((10, 200, 0, 0))
         .netmask((255, 255, 0, 0))
-        // .destination((10, 0, 200, 1))
+        // .destination((10,0, 200, 1))
         .up();
+
+    #[cfg(target_os = "linux")]
+    config.platform_config(|cfg| {
+        cfg.ensure_root_privileges(true);
+    });
 
     let dev = tun::create_as_async(&config).unwrap();
     let mut buf = [0; 4096];

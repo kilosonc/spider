@@ -1,9 +1,9 @@
 use {
-    etherparse::{Ipv4Slice, Ipv6Slice, UdpHeader},
+    etherparse::{Ipv4Slice, Ipv6Slice, UdpHeader}, 
     tokio::{
         net::UdpSocket,
         time::{self, Duration},
-    },
+    }
 };
 
 #[tokio::main]
@@ -16,27 +16,31 @@ async fn main() {
         time::sleep(Duration::from_secs(1)).await;
         send().await;
     }
-    // time::sleep(Duration::from_secs(100)).await;
 }
 
 async fn send() {
     // send data to 10.0.200.9
     let socket = UdpSocket::bind("0.0.0.0:0").await.unwrap();
-    socket
+    let size = socket
         .send_to(b"Hello, world!", "10.200.9.1:80")
         .await
         .unwrap();
-    println!("Sent data to 10.200.9.1:80")
+    println!("Sent data to 10.200.9.1:80, bytes: {}", size);
 }
 
 async fn tun_listen() {
-    println!("Listen on 10.200.9.1");
+    println!("Listen on 10.200.0.0");
     let mut config = tun::Configuration::default();
     config
-        .address((10, 200, 9,1))
+        .address((10, 200, 0, 0))
         .netmask((255, 255, 0, 0))
-        // .destination((10, 0, 200, 1))
+        // .destination((10,0, 200, 1))
         .up();
+
+    #[cfg(target_os = "linux")]
+    config.platform_config(|cfg| {
+        cfg.ensure_root_privileges(true);
+    });
 
     let dev = tun::create_as_async(&config).unwrap();
     let mut buf = [0; 4096];
