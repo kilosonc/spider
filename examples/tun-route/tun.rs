@@ -8,11 +8,13 @@ use {
 
 #[tokio::main]
 async fn main() {
-    // tokio::spawn(async {
+    tokio::spawn(async {
         tun_listen().await;
-    // });
+    });
 
-    // TODO: add route from 10.0.199.0/24 to 10.0.200.9
+    time::sleep(Duration::from_secs(1)).await;
+    send().await;
+    time::sleep(Duration::from_secs(1)).await;
 }
 
 async fn send() {
@@ -29,8 +31,7 @@ async fn tun_listen() {
     config
         .address((10, 0, 200, 9))
         .netmask((255, 255, 255, 0))
-        .destination((10, 0, 200, 255))
-        .mtu(1500)
+        // .destination((10, 0, 200, 1))
         .up();
 
     let dev = tun::create_as_async(&config).unwrap();

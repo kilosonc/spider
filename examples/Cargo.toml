@@ -12,10 +12,21 @@ env_logger = "0.10"
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.9"
 etherparse = { version = "0.18" }
+# tokio-tun = {version = "0.13.2"}
 # net-route = { version = "0.4.6" }
-# rtnetlink = { version = "0.16.0"}
+libc = {version = "0.2.164"}
+rtnetlink = { version = "0.16.0"}
 
 
 [[example]]
 name = "tun"
 path = "tun/tun.rs"
+
+
+[[example]]
+name = "tun-bridge"
+path = "tun-bridge/tun.rs"
+
+[[example]]
+name = "tun-route"
+path = "tun-route/tun.rs"

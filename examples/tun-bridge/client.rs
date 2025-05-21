@@ -15,7 +15,7 @@ async fn send() {
     // send data to 10.0.200.9
     let socket = UdpSocket::bind("0.0.0.0:0").await.unwrap();
     socket
-        .send_to(b"Hello, world!", "10.0.200.9:80")
+        .send_to(b"Hello, world!", "10.0.199.9:80")
         .await
         .unwrap();
 }

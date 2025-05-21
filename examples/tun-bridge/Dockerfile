@@ -16,6 +16,10 @@ FROM debian:latest
 # Set the working directory
 WORKDIR /app
 
+RUN apt-get update && \
+    apt-get install -y iputils-ping iproute2 && \
+    rm -rf /var/lib/apt/lists/*
+
 # Copy the built binary from the previous stage
 COPY --from=builder /app/target/release/client ./
 
