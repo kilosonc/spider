@@ -28,3 +28,7 @@ path = "tun-bridge/tun.rs"
 [[example]]
 name = "tun-route"
 path = "tun-route/tun.rs"
+
+[[example]]
+name = "tun-udp"
+path = "tun-udp/tun.rs"
